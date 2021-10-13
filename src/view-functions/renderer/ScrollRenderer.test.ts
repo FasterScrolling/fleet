@@ -1,6 +1,5 @@
 import { Collection } from '../../collections/Collection';
 import { endFillerClass, startFillerClass } from '../../constants/css-classes';
-import { ChildListChangeEvent } from '../../dom/CustomEvents';
 import { ScrollRenderer } from './ScrollRenderer';
 
 export function setupIntersectionObserverMock({
@@ -129,22 +128,6 @@ describe('ScrollRenderer initialization', () => {
     expect(scrollView.reachedStart).toBe(true);
     expect(scrollView.startIndex).toEqual(0);
     expect(scrollView.get(2).textContent).toEqual('2');
-  });
-
-  test('detect target childlist mutation', (done) => {
-    target.appendChild(document.createElement('p'));
-
-    document.addEventListener(
-      ChildListChangeEvent.typeArg,
-      () => {
-        // after mutations are handled
-        expect(target.childElementCount).toEqual(1);
-        done();
-      },
-      {
-        once: true,
-      }
-    );
   });
 });
 

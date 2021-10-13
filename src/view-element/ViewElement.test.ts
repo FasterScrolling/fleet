@@ -1,5 +1,4 @@
 import { ViewElement } from './ViewElement';
-import { ChildListChangeEvent } from '../dom/CustomEvents';
 
 describe('View Element', () => {
   let source: HTMLElement;
