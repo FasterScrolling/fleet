@@ -1,0 +1,263 @@
+[
+  {
+    "title": "A Blowout at Santa Banana",
+    "year": 1914,
+    "cast": ["Charlotte Burton", "Sydney Ayres", "Louise Lester", "Jack Richardson"],
+    "genres": ["Comedy"]
+  },
+  {
+    "title": "The Body in the Trunk",
+    "year": 1914,
+    "cast": ["William Garwood", "George Larkin"],
+    "genres": ["Drama", "Comedy", "Horror", "Romance"]
+  },
+  {
+    "title": "Break, Break, Break",
+    "year": 1914,
+    "cast": [
+      "B. Reeves Eason",
+      "William Garwood",
+      "Louise Lester",
+      "Jack Richardson",
+      "Vivian Rich",
+      "Harry von Meter"
+    ],
+    "genres": ["Drama"]
+  },
+  {
+    "title": "Brewster's Millions",
+    "year": 1914,
+    "cast": ["Edward Abeles", "Sydney Deane", "Joseph Singleton"],
+    "genres": ["Comedy"]
+  },
+  {
+    "title": "Brute Force",
+    "year": 1914,
+    "cast": ["Robert Harron", "Mae Marsh", "William J. Butler", "Wilfred Lucas"],
+    "genres": ["Drama"]
+  },
+  {
+    "title": "Business Versus Love",
+    "year": 1914,
+    "cast": ["Edward Coxen", "Winifred Greenwood", "Harry von Meter", "Jack Richardson"],
+    "genres": ["Drama", "Comedy", "Horror", "Romance"]
+  },
+  {
+    "title": "A Busy Day",
+    "year": 1914,
+    "cast": ["Charlie Chaplin", "Mack Swain", "Phyllis Allen"],
+    "genres": ["Comedy"]
+  },
+  {
+    "title": "The Butterfly",
+    "year": 1914,
+    "cast": [
+      "Charlotte Burton",
+      "George Field",
+      "Edward Coxen",
+      "Edith Borella",
+      "Jean Durrell",
+      "Ida Lewis",
+      "John Steppling"
+    ],
+    "genres": ["Drama", "Comedy", "Horror", "Romance"]
+  },
+  {
+    "title": "Calamity Anne's Love Affair",
+    "year": 1914,
+    "cast": [
+      "Charlotte Burton",
+      "Louise Lester",
+      "George Field",
+      "Edith Borella",
+      "B. Reeves Eason"
+    ],
+    "genres": ["Western"]
+  },
+  {
+    "title": "The Call of the North",
+    "year": 1914,
+    "cast": ["Robert Edeson", "Theodore Roberts"],
+    "genres": ["Adventure"]
+  },
+  {
+    "title": "The Call of the Traumerei",
+    "year": 1914,
+    "cast": ["Charlotte Burton", "Sydney Ayres", "Caroline Frances Cooke", "Jack Richardson"],
+    "genres": ["Drama", "Comedy", "Horror", "Romance"]
+  },
+  {
+    "title": "The Cameo of the Yellowstone",
+    "year": 1914,
+    "cast": ["William Garwood", "Harry De Vere", "Louise Lester"],
+    "genres": ["Western"]
+  },
+  {
+    "title": "Captain Alvarez",
+    "year": 1914,
+    "cast": ["Edith Storey", "William Desmond Taylor", "George Holt"],
+    "genres": ["Historical", "Drama"]
+  },
+  {
+    "title": "Caught in a Cabaret",
+    "year": 1914,
+    "cast": ["Charlie Chaplin", "Mabel Normand", "Edgar Kennedy"],
+    "genres": ["Comedy"]
+  },
+  {
+    "title": "Caught in the Rain",
+    "year": 1914,
+    "cast": ["Charlie Chaplin", "Mack Swain", "Alice Davenport"],
+    "genres": ["Comedy"]
+  },
+  {
+    "title": "The Certainty of Man",
+    "year": 1914,
+    "cast": ["Charlotte Burton", "Sydney Ayres", "Chick Morrison"],
+    "genres": ["Drama"]
+  },
+  {
+    "title": "Chicken Chaser",
+    "year": 1914,
+    "cast": ["Fatty Arbuckle", "Gordon Griffith"],
+    "genres": ["Comedy"]
+  },
+  {
+    "title": "Cinderella",
+    "year": 1914,
+    "cast": ["Mary Pickford", "Owen Moore", "Isobel Vernon"],
+    "genres": ["Fantasy", "Drama"]
+  },
+  {
+    "title": "The Cocoon and the Butterfly",
+    "year": 1914,
+    "cast": ["William Garwood", "Louise Lester"],
+    "genres": ["Drama"]
+  },
+  {
+    "title": "The Combination of the Safe",
+    "year": 1914,
+    "cast": ["Earle Foxe"],
+    "genres": ["Crime", "Drama"]
+  },
+  {
+    "title": "The Coming of the Padres",
+    "year": 1914,
+    "cast": ["Sydney Ayres", "Perry Banks", "Louise Lester"],
+    "genres": ["Drama", "Comedy", "Horror", "Romance"]
+  },
+  {
+    "title": "Cruel, Cruel Love",
+    "year": 1914,
+    "cast": ["Charlie Chaplin", "Edgar Kennedy", "Minta Durfee"],
+    "genres": ["Comedy"]
+  },
+  {
+    "title": "Damaged Goods",
+    "year": 1914,
+    "cast": ["Richard Bennett", "Adrienne Morrison", "Maude Milton"],
+    "genres": ["Drama", "Comedy", "Horror", "Romance"]
+  },
+  {
+    "title": "David Gray's Estate",
+    "year": 1914,
+    "cast": ["Charlotte Burton", "Sydney Ayres", "Chick Morrison"],
+    "genres": ["Drama", "Comedy", "Horror", "Romance"]
+  },
+  {
+    "title": "Destinies Fulfilled",
+    "year": 1914,
+    "cast": ["Charlotte Burton", "Sydney Ayres", "Jacques Jaccard", "Violet Knights"],
+    "genres": ["Comedy"]
+  },
+  {
+    "title": "Does It End Right?",
+    "year": 1914,
+    "cast": ["William Garwood", "Charlotte Burton", "Louise Lester", "Vivian Rich"],
+    "genres": ["Drama", "Comedy", "Horror", "Romance"]
+  },
+  {
+    "title": "Dough and Dynamite",
+    "year": 1914,
+    "cast": ["Charlie Chaplin", "Chester Conklin", "Fritz Schade"],
+    "genres": ["Comedy"]
+  },
+  {
+    "title": "The Envoy Extraordinary",
+    "year": 1914,
+    "cast": ["Jack Nelson", "Caroline Frances Cooke"],
+    "genres": ["Drama"]
+  },
+  {
+    "title": "The Escape",
+    "year": 1914,
+    "cast": ["Donald Crisp", "Blanche Sweet", "Mae Marsh"],
+    "genres": ["Drama"]
+  },
+  {
+    "title": "The Exploits of Elaine",
+    "year": 1914,
+    "cast": ["Pearl White", "Sheldon Lewis"],
+    "genres": ["Drama"]
+  },
+  {
+    "title": "The Face on the Bar Room Floor",
+    "year": 1914,
+    "cast": ["Charles Chaplin", "Cecile Arnold", "Fritz Schade"],
+    "genres": ["Comedy"]
+  },
+  {
+    "title": "The Fatal Mallet",
+    "year": 1914,
+    "cast": ["Charles Chaplin", "Mabel Normand", "Mack Sennett"],
+    "genres": ["Comedy"]
+  },
+  {
+    "title": "Fate's Decree",
+    "year": 1914,
+    "cast": ["William Garwood", "Richard Henry Cummings", "Billie West"],
+    "genres": ["Drama", "Comedy", "Horror", "Romance"]
+  },
+  {
+    "title": "Fatty's Magic Pants",
+    "year": 1914,
+    "cast": ["Fatty Arbuckle", "Charly Chase"],
+    "genres": ["Comedy"]
+  },
+  {
+    "title": "Feast and Famine",
+    "year": 1914,
+    "cast": ["B. Reeves Eason", "William Garwood", "Harry von Meter"],
+    "genres": ["Drama", "Comedy", "Horror", "Romance"]
+  },
+  {
+    "title": "A Film Johnnie",
+    "year": 1914,
+    "cast": ["Charlie Chaplin", "Fatty Arbuckle", "Mabel Normand"],
+    "genres": ["Drama", "Comedy", "Horror", "Romance"]
+  },
+  {
+    "title": "The Final Impulse",
+    "year": 1914,
+    "cast": ["Charlotte Burton", "Perry Banks", "William Bertram", "Edward Coxen"],
+    "genres": ["Drama", "Comedy", "Horror", "Romance"]
+  },
+  {
+    "title": "The Floor Above",
+    "year": 1914,
+    "cast": ["Earle Foxe", "Henry Walthall", "Dorothy Gish"],
+    "genres": ["Mystery", "Drama"]
+  },
+  {
+    "title": "A Florida Enchantment",
+    "year": 1914,
+    "cast": ["Sydney Drew", "Edith Storey"],
+    "genres": ["Drama", "Comedy", "Horror", "Romance"]
+  },
+  {
+    "title": "In the Footprints of Mozart",
+    "year": 1914,
+    "cast": ["Charlotte Burton", "William Bertram", "Edith Borella"],
+    "genres": ["Drama", "Comedy", "Horror", "Romance"]
+  }
+]
