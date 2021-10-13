@@ -1,4 +1,4 @@
-import { LazyCollectionProvider, UnmaterializableCollectionProvider } from './Collection';
+import { LazyCollectionProvider } from './Collection';
 import { ResizeStrategy, SlidingWindow } from './SlidingWindow';
 
 describe('SlidingWindow', () => {
@@ -52,49 +52,6 @@ describe('SlidingWindow', () => {
 
     // empty slice
     expect(Array.from(window.slice(6, 4))).toEqual([]);
-  });
-
-  test('unmaterializable iterable', () => {
-    const array = ['a', 'b', 'c', 'd', 'e'];
-    const collection = new UnmaterializableCollectionProvider(array);
-    const window = new SlidingWindow(1, 3, collection);
-    expect(window.startIndex).toEqual(1);
-    expect(window.endIndex).toEqual(3);
-    expect(window.windowSize).toEqual(3);
-    expect(window.length).toBeNull();
-    expect(window.isWindowEmpty).toBeNull();
-    expect(window.isWindowFull).toBeNull();
-    expect(window.numElementBefore).toBeNull();
-    expect(window.numElementAfter).toBeNull();
-    expect(window.reachedStart).toBe(false);
-    expect(window.reachedEnd).toBeNull();
-
-    expect(window.get(0)).toEqual('b');
-    expect(window.get(1)).toEqual('c');
-    expect(window.get(2)).toEqual('d');
-    expect(window.startIndex).toEqual(1);
-    expect(window.endIndex).toEqual(3);
-    expect(window.windowSize).toEqual(3);
-    expect(window.length).toBeNull();
-    expect(window.isWindowEmpty).toBeNull();
-    expect(window.isWindowFull).toBeNull();
-    expect(window.numElementBefore).toBeNull();
-    expect(window.numElementAfter).toBeNull();
-    expect(window.reachedStart).toBe(false);
-    expect(window.reachedEnd).toBeNull();
-
-    // iterate through the collection so that it knows its length
-    expect(Array.from(collection)).toEqual(array);
-    expect(window.startIndex).toEqual(1);
-    expect(window.endIndex).toEqual(3);
-    expect(window.windowSize).toEqual(3);
-    expect(window).toHaveLength(3);
-    expect(window.isWindowEmpty).toBe(false);
-    expect(window.isWindowFull).toBe(true);
-    expect(window.numElementBefore).toEqual(1);
-    expect(window.numElementAfter).toEqual(1);
-    expect(window.reachedStart).toBe(false);
-    expect(window.reachedEnd).toBe(false);
   });
 
   test('uninitialized SlidingWindow state', () => {
