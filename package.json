@@ -20,7 +20,7 @@
     "format.check": "prettier --check src/**/*.ts",
     "format.list-different": "prettier --list-different src/**/*.ts",
     "prepare": "husky install",
-    "scss": "node-sass --watch src/scss -o src/css"
+    "scss": "node-sass --watch src/example/scss -o src/example/css"
   },
   "repository": {
     "type": "git",

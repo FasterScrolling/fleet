@@ -1,0 +1,57 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Fast Scrolling Demo</title>
+
+    <!-- INCLUDING JQUERY-->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <link rel="stylesheet" href="/css/movies.css" />
+  </head>
+
+  <body>
+    <caption>
+      Movie Details
+    </caption>
+    <div class="table-container">
+      <!-- TABLE CONSTRUCTION-->
+      <table id="movie-table">
+
+        <thead>
+          <tr>
+            <!-- HEADING FORMATION -->
+            <th scope="col">Title</th>
+            <th>Year</th>
+            <th>Cast</th>
+            <th>Genres</th>
+          </tr>
+        </thead>
+
+        <tbody class="tbody">
+          <script type="text/javascript">
+            $.ajax({
+              //url: 'https://raw.githubusercontent.com/prust/wikipedia-movie-data/master/movies.json',
+              url: '/datasource/movies.json',
+              type: 'Get',
+              dataType: 'json',
+              success: function (data) {
+                var movie = '';
+                $.each(data, function (key, value) {
+                  movie += '<tr>';
+                  movie += '<td scope="row" data-label="Title">' + value.title + '</td>';
+                  movie += '<td data-label="Year">' + value.year + '</td>';
+                  movie += '<td data-label="Cast">' + value.cast + '</td>';
+                  movie += '<td data-label="Genre">' + value.genres + '</td>';
+                  movie += '</tr>';
+                  $('#movie-table').append(movie);
+                });
+              },
+              error: function (jqXHR, textStatus, errorThrown) {
+                alert('Error: ' + textStatus + ' - ' + errorThrown);
+              },
+            });
+          </script>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
