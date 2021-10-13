@@ -6,8 +6,12 @@
 
 import { Collection, LazyCollectionProvider } from '../collections/Collection';
 import { peek } from '../utils/IterableHelper';
-import { TViewElementLike } from '../view-functions/renderer/SyncRenderer';
 import { ViewElement } from '../view-element/ViewElement';
+
+/**
+ * A union type represents the types that can be treated as a `ViewElement`, which are the types that can be used to initialize the child of `ViewElement`.
+ */
+export type TViewElementLike = ViewElement<HTMLElement> | HTMLElement;
 
 /**
  * This interface abstracts out a provider that returns parent `ViewElement` and child `ViewElement` on demand. This parent-child relationship can also be viewed as a container-item relationship -- all child `ViewElement` are contained/registered in parent `ViewElement`.
@@ -311,13 +315,14 @@ export class ViewElementProvider implements IViewElementProvider {
     if (shouldLazyInitialize) {
       // clear previous children `ViewElement`
       this.parentViewElement.children_ = [];
-      const viewElementCollection = new LazyCollectionProviderWithMaterializationCallback<ViewElement>(
-        (function* () {
-          for (const element of iterable) {
-            yield new ViewElement(element);
-          }
-        })()
-      );
+      const viewElementCollection =
+        new LazyCollectionProviderWithMaterializationCallback<ViewElement>(
+          (function* () {
+            for (const element of iterable) {
+              yield new ViewElement(element);
+            }
+          })()
+        );
       /**
        * Instead of inserting a just-materialized view element at specified index, we append it at the end. This is because (1) materialization happen in order so next materialized element should be added as last view element child of `parentViewElement` (2) mutation of children `ViewElement` might happen during materialization so inserting at original place might create unexpected effect. For example, if a child ViewElement was removed, inserting at original place will create an empty slot.
        */

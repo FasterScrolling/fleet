@@ -2,14 +2,6 @@
  * @module
  *
  * This module provides a way to represent a collection of element, which provides a way to iterate through a group of elements.
- *
- * An important classification criterion for Collection is its materializability. A Collection can be classified into one of the following three categories based on its materializability:
- *
- *    + materialized: there is constant cost O(1) in indexing an element (@example when the collection is realized through an array of elements)
- *    + materializable: there is linear cost O(n) in indexing an element before the Collection is materialized. However, after the Collection is materializable, the cost of indexing an element will be constant O(1). Usually the materialization process happens lazily *on-need*: for example, when last element needs to be accessed, the Collection will materialize since it only knows to reach the last element through iterating the whole collection. (@example when the collection is initially represented by an Iterable that fits in memory)
- *    + unmaterializable: there will always be a linear cost O(n) in indexing an element. The Collection can be unmaterializable when
- *        + the materialized Collection will be too large to fit in memory
- *        + materialization is unnecessary as there is no need to index an element -- the collection will only be iterated.
  */
 
 /**
@@ -187,24 +179,14 @@ export abstract class Collection<TElement> implements Collection<TElement> {
   readonly iterable?: Iterable<TElement>;
 
   /**
-   * Indicates whether and how the collection should materialize the iterable.
-   */
-  readonly materializationStrategy?: MaterializationStrategy;
-
-  /**
    * Creates a CollectionProvider, which is an indexable iterable.
    *
    * @param {Iterable<TElement>} iterable - An iterable of collection that constitutes the elements of the collection. The CollectionProvider provides extensions to manipulate this iterable.
    * @param {MaterializationStrategy} materializationStrategy - Whether and how the collection can materialize the iterable.
    * @constructs AbstractCollectionProvider
    */
-  protected constructor(
-    iterable: Iterable<TElement>,
-    materializationStrategy: MaterializationStrategy
-  ) {
+  protected constructor(iterable: Iterable<TElement>) {
     this.iterable = iterable;
-    this.materializationStrategy = materializationStrategy;
-    this.materializable = this.materializationStrategy !== MaterializationStrategy.Prohibit;
   }
 
   /**
@@ -239,116 +221,6 @@ export abstract class Collection<TElement> implements Collection<TElement> {
 
   slice(start: number, end: number): Iterable<TElement> {
     return Collection.slice(this, start, end);
-  }
-}
-
-/**
- * `MaterializationStrategy` defines how a collection can process its underlying iterable.
- */
-enum MaterializationStrategy {
-  /**
-   * If `MaterializationStrategy` is `Lazy`, then a collection can create an array containing all elements in the iterable. However, this array is not created at-once, it is created lazily on-need.
-   *
-   * Since materialization happens through iterating the iterable, if an element at some index is materialized, all elements at index before it must also be materialized.
-   *
-   * @example When 5th element is indexed on a freshly created collection, the iterable will be iterated until the 5th element, therefore, the array will contain elements with index less than or equal to 5.
-   */
-  Lazy,
-  /**
-   * Materialization is not allowed. All accessing needed to be done through iterating.
-   *
-   * This could be useful when the underlying iterable maps to a constantly-changing data structure, in which case, any materialization would be invalidated at next iteration of the iterable.
-   */
-  Prohibit,
-}
-
-/**
- * An implementation of AbstractCollectionProvider that adopts the `Prohibit` MaterializationStrategy. In other words, this CollectionProvider will not materialize the iterable in any ways. As a result, the iterable should be repeatedly iterable: it should be able to be iterated any number of times.
- */
-export class UnmaterializableCollectionProvider<TElement> extends Collection<TElement> {
-  /**
-   * If defined, stores the length of the collection
-   */
-  protected _length: number;
-
-  get length(): number {
-    return this._length;
-  }
-
-  /**
-   * Provide a hint of actual iterable length. Setting the length will not affect the materialization process.
-   *
-   * @param hint - The length of iterable.
-   */
-  set length(hint: number) {
-    this._length = hint;
-  }
-
-  /**
-   * Invokes `AbstractCollectionProvider#constructor` with `Prohibit` MaterializationStrategy.
-   *
-   * @param {Iterable<TElement>} iterable - An iterable of collection elements. This iterable must be repeatedly iterable.
-   * @constructs UnmaterializableCollectionProvider
-   */
-  constructor(iterable: Iterable<TElement>) {
-    super(iterable, MaterializationStrategy.Prohibit);
-  }
-
-  isElementMaterialized(index: number): boolean {
-    return false;
-  }
-
-  *[Symbol.iterator](): IterableIterator<TElement> {
-    let i = 0;
-    for (const element of this.iterable) {
-      yield element;
-      i++;
-    }
-    this._length = i;
-  }
-
-  get(index: number): TElement {
-    const length = this.length;
-    if (index < 0 || (length !== undefined && index >= length)) {
-      // shortcut out of bound indexing
-      return undefined;
-    }
-
-    let i = 0;
-    for (const element of this.iterable) {
-      if (i === index) {
-        return element;
-      }
-      i++;
-    }
-    this._length = i;
-    return undefined;
-  }
-
-  getMaterializationLength(): number {
-    return 0;
-  }
-
-  *slice(start: number, end: number): IterableIterator<TElement> {
-    const normalizedIndices = Collection.normalizeSliceIndices(start, end, this.length);
-    if (normalizedIndices == null) {
-      return;
-    } else {
-      [start, end] = normalizedIndices;
-    }
-
-    let i = 0;
-    for (const element of this.iterable) {
-      if (start <= i) {
-        if (i < end) {
-          yield element;
-        } else {
-          return;
-        }
-      }
-      i++;
-    }
-    this._length = i;
   }
 }
 
@@ -433,7 +305,7 @@ export class LazyCollectionProvider<TElement> extends Collection<TElement> {
    * @param {Iterable<TElement>} iterable - An iterable of collection elements. This iterable could be single-use since it will be materialized.
    */
   constructor(iterable: Iterable<TElement>) {
-    super(iterable, MaterializationStrategy.Lazy);
+    super(iterable);
 
     this._materializedCollection = [];
     this._materialized = false;

@@ -70,10 +70,6 @@ export type ViewTransformation = Exclude<AbstractViewFunction<ViewElement>, Rend
  * + **rendering**: This part is responsible for using the view elements selected by transformation to update the DOM. This part is implemented by a `RenderingViewFunction`.
  *
  * This process can be viewed as forward propagation -- a rendering view is first produced before it is synced to the DOM. For example, when a new filter function is added to transformations, rendering view will regenerate and DOM will update accordingly.
- *
- * Oppositely, `BaseView` also provides a back propagation -- the relevant DOM region is modified and the mutations are routed back to modify the source. For example, when a new element is inserted at DOM, back propagation will create a corresponding view element at appropriate position in source and reapply forward propagation.
- *
- * Since backward propagation is not always desired, it can be enabled and disabled by `enableBackPropagation` and `disableBackPropagation`.
  */
 export class BaseView extends Aggregate<TViewElementLike> {
   /**
@@ -222,79 +218,6 @@ export class BaseView extends Aggregate<TViewElementLike> {
     this.subscribe(this, AbstractViewFunction.shouldRegenerateViewEventName, () =>
       this.view(undefined, true)
     );
-  }
-
-  /**
-   * Insert a new `ViewElement` as a child of `this.viewElementProvider`.
-   *
-   * @param addedNodeList - A NodeList containing nodes that are added from DOM in the triggering mutation.
-   * @returns True if a child `ViewElement` was added into `this.viewElementProvider`. False if none was added.
-   */
-  protected tryInsertViewElementFromNodeList(addedNodeList: NodeList): boolean {
-    // handle nodes inserted to DOM
-    let hasInsertedAny = false;
-
-    /* This map maps `HTMLElement` to the index of the child `ViewElement` containing this `HTMLElement` in `this.viewElementProvider` */
-    const domElementToViewElementIndex = new Map<HTMLElement, number>();
-    let lastChildViewElementIndex = 0;
-    const parentViewElement: ViewElement = this.viewElementProvider.parentViewElement;
-    for (const addedNode of addedNodeList) {
-      if (addedNode.nodeType !== Node.ELEMENT_NODE) {
-        // ignore mutations of other types of node (for example, text node)
-        continue;
-      }
-
-      hasInsertedAny = true;
-
-      let childIndex = 1;
-      /**
-       * Previous DOM element of an added node is:
-       *
-       * + either another added node, which is already processed and we know index of
-       * + an already-existing `HTMLElement`. Since there is a one-to-one relationship between `HTMLElement` in `target` and child `ViewElement` for `this.renderingView.rootViewElement` and `this.renderingView.rootViewElement.children_` is subset of `this.viewElementProvider.childViewElements`, we can find corresponding `ViewElement`'s identifier, get the corresponding child `ViewElement` in `this.viewElementProvider`, locate its index with `indexOf`.
-       */
-      const previousDomElement = (addedNode as HTMLElement).previousElementSibling as HTMLElement;
-
-      if (domElementToViewElementIndex.has(previousDomElement)) {
-        childIndex += domElementToViewElementIndex.get(previousDomElement);
-      } else {
-        const identifier = previousDomElement.dataset[ViewElement.identifierDatasetName_];
-        const childViewElement = parentViewElement.getChildByIdentifier__(identifier);
-
-        /**
-         * use `indexOf` to compute the `ViewElement` index, also speed up the linear search by starting from last computed `ViewElement` index.
-         */
-        const childViewElementIndex = (lastChildViewElementIndex =
-          parentViewElement.children_.indexOf(childViewElement, lastChildViewElementIndex));
-        domElementToViewElementIndex.set(previousDomElement, childViewElementIndex);
-        childIndex += childViewElementIndex;
-      }
-
-      domElementToViewElementIndex.set(addedNode as HTMLElement, childIndex);
-      parentViewElement.insertChild__(addedNode as HTMLElement, childIndex);
-    }
-
-    return hasInsertedAny;
-  }
-
-  /**
-   * Remove a corresponding child `ViewElement` in `this.viewElementProvider` if provided node list contains its underlying element.
-   *
-   * @param removedNodeList - A NodeList containing nodes that are deleted from DOM in the triggering mutation.
-   * @returns True if a child `ViewElement` in `this.viewElementProvider` was removed because its underlying element is included in the nodelist. False if none of children `ViewElement` was removed because of this.
-   */
-  protected tryRemoveViewElementFromNodeList__(removedNodeList: NodeList): boolean {
-    let hasRemovedAny = false;
-
-    // handle nodes removed from DOM
-    for (const node of removedNodeList) {
-      const identifier = (node as HTMLElement).dataset[ViewElement.identifierDatasetName_];
-      const hasOneRemoved =
-        this.viewElementProvider.parentViewElement.removeChildByIdentifier__(identifier) !== null;
-      hasRemovedAny = hasRemovedAny || hasOneRemoved;
-    }
-
-    return hasRemovedAny;
   }
 
   /**

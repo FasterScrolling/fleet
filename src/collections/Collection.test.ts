@@ -1,45 +1,4 @@
-import {
-  Collection,
-  LazyCollectionProvider,
-  UnmaterializableCollectionProvider,
-} from './Collection';
-
-describe('UnmaterializableCollectionProvider', () => {
-  const iterable = [1, 2, 3, 4, 5];
-  let collection: UnmaterializableCollectionProvider<number>;
-
-  beforeEach(() => (collection = new UnmaterializableCollectionProvider<number>(iterable)));
-
-  test('iteration', () => {
-    let i = 0;
-    expect(collection.length).toBeUndefined();
-    for (const element of collection) {
-      expect(element).toEqual(iterable[i++]);
-    }
-    expect(collection).toHaveLength(5);
-
-    i = 0;
-    for (const element of collection) {
-      expect(element).toEqual(iterable[i++]);
-    }
-  });
-
-  test('indexing', () => {
-    expect(Collection.get(collection, -1)).toBeUndefined();
-    expect(Collection.get(collection, 100)).toBeUndefined();
-    for (let i = 0; i < iterable.length; i++) {
-      expect(Collection.get(collection, i)).toEqual(iterable[i]);
-    }
-  });
-
-  test('slicing', () => {
-    const slice = collection.slice(1, 3);
-    let index = 1;
-    for (const element of slice) {
-      expect(element).toEqual(iterable[index++]);
-    }
-  });
-});
+import { Collection, LazyCollectionProvider } from './Collection';
 
 describe('LazyCollectionProvider', () => {
   const iterable = [1, 2, 3, 4, 5];
