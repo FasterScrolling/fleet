@@ -7,11 +7,6 @@
  *
  *      + When scrolling happens, the window will be shifted accordingly
  *      + When the window is updated, rendered elements will be replaced accordingly
- *
- * From another perspective, `ScrollView` can be split into a `SyncView` and a `ScrollHandler`.
- *
- *    + The former updates the DOM tree whenever its target view changes: for example, if its target view updates from empty to 100 elements, all 100 elements will be appended to the target node.
- *    + The latter responds to Scroll Event so that whenever page is scrolled and different content should be displayed, it appropriately updates the target view for `SyncView` which will then refresh the rendering view.
  */
 
 import { CircularArray } from '../../collections/CircularArray';

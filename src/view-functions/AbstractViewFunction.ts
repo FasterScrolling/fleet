@@ -31,7 +31,8 @@ import { EventNotifier } from '../composition/EventNotification';
 
 export abstract class AbstractViewFunction<TViewElement>
   extends EventNotifier
-  implements ViewFunction<TViewElement>, IFeatureProvider {
+  implements ViewFunction<TViewElement>, IFeatureProvider
+{
   /** a queue containing tasks executed before view update */
   beforeViewUpdateTaskQueue: TaskQueue = new TaskQueue();
   /** a queue containing tasks executed after view update */
