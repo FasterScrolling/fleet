@@ -119,7 +119,7 @@ export class BaseView extends Aggregate<TViewElementLike> {
     /**
      * This invocation of `composeFeatures` will allow exposed methods in `this.renderingView` to be invoked directly on this `BaseView` instance.
      */
-    composeFeatures(this, [this.renderingView]);
+    // composeFeatures(this, [this.renderingView]);
 
     /**
      * Generate and mount the rendering view for first time.

@@ -92,7 +92,7 @@ export class ViewElementProvider implements IViewElementProvider {
   /**
    * A threshold above which lazy initialization will be applied. When lazy initialization is applied, children `ViewElement` will not be added to parent `ViewElement` immediately. Rather it will be added before this `ViewElement` is about to be iterated over.
    */
-  static LAZY_INITIALIZATION_THRESHOLD = 1000;
+  static LAZY_INITIALIZATION_THRESHOLD = 100;
 
   /** @override */
   parentViewElement: ViewElement;
@@ -151,10 +151,10 @@ export class ViewElementProvider implements IViewElementProvider {
     fallbackContainer: HTMLElement,
     shouldLazyInitialize: boolean
   ): void {
-    const children: HTMLCollection = documentFragment.children;
+    const children = Array.from(documentFragment.children) as Array<HTMLElement>;
 
     if (children.length === 1) {
-      this.consumeHTMLElement(children[0] as HTMLElement, fallbackContainer, shouldLazyInitialize);
+      this.consumeHTMLElement(children[0], fallbackContainer, shouldLazyInitialize);
     } else {
       this.consumeIterable(children, fallbackContainer, shouldLazyInitialize);
     }
@@ -172,7 +172,11 @@ export class ViewElementProvider implements IViewElementProvider {
     fallbackContainer: HTMLElement,
     shouldLazyInitialize: boolean
   ): void {
-    this.consumeIterable(htmlElement.children, htmlElement, shouldLazyInitialize);
+    this.consumeIterable(
+      Array.from(htmlElement.children) as Array<HTMLElement>,
+      htmlElement,
+      shouldLazyInitialize
+    );
   }
 
   /**
@@ -312,36 +316,9 @@ export class ViewElementProvider implements IViewElementProvider {
     iterable: Iterable<HTMLElement>,
     shouldLazyInitialize: boolean
   ): void {
-    if (shouldLazyInitialize) {
-      // clear previous children `ViewElement`
-      this.parentViewElement.children_ = [];
-      const viewElementCollection =
-        new LazyCollectionProviderWithMaterializationCallback<ViewElement>(
-          (function* () {
-            for (const element of iterable) {
-              yield new ViewElement(element);
-            }
-          })()
-        );
-      /**
-       * Instead of inserting a just-materialized view element at specified index, we append it at the end. This is because (1) materialization happen in order so next materialized element should be added as last view element child of `parentViewElement` (2) mutation of children `ViewElement` might happen during materialization so inserting at original place might create unexpected effect. For example, if a child ViewElement was removed, inserting at original place will create an empty slot.
-       */
-      viewElementCollection.materializationCallback = (_, child) =>
-        this.parentViewElement.insertChild__(child);
-      this.getChildViewElementsImplementation = () => {
-        if (viewElementCollection.materialized) {
-          // all ViewElement has been registered under `parentViewElement`
-          this.getChildViewElementsImplementation = () => this.parentViewElement.children_;
-          return this.parentViewElement.children_;
-        } else {
-          return viewElementCollection;
-        }
-      };
-    } else {
-      // create all ViewElement immediately
-      this.parentViewElement.patchChildViewElementsWithDOMElements__(iterable);
-      this.getChildViewElementsImplementation = () => this.parentViewElement.children_;
-    }
+    // create all ViewElement immediately
+    this.parentViewElement.patchChildViewElementsWithDOMElements__(iterable);
+    this.getChildViewElementsImplementation = () => this.parentViewElement.children_;
   }
 
   /**
