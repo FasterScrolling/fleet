@@ -5,7 +5,7 @@
 
     <!-- INCLUDING JQUERY-->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <link rel="stylesheet" href="/css/movies.css" />
+    <link rel="stylesheet" href="css/movies.css" />
   </head>
 
   <body>
@@ -15,7 +15,6 @@
     <div class="table-container">
       <!-- TABLE CONSTRUCTION-->
       <table id="movie-table">
-
         <thead>
           <tr>
             <!-- HEADING FORMATION -->
@@ -26,32 +25,54 @@
           </tr>
         </thead>
 
-        <tbody class="tbody">
-          <script type="text/javascript">
-            $.ajax({
-              //url: 'https://raw.githubusercontent.com/prust/wikipedia-movie-data/master/movies.json',
-              url: '/datasource/movies.json',
-              type: 'Get',
-              dataType: 'json',
-              success: function (data) {
-                var movie = '';
-                $.each(data, function (key, value) {
-                  movie += '<tr>';
-                  movie += '<td scope="row" data-label="Title">' + value.title + '</td>';
-                  movie += '<td data-label="Year">' + value.year + '</td>';
-                  movie += '<td data-label="Cast">' + value.cast + '</td>';
-                  movie += '<td data-label="Genre">' + value.genres + '</td>';
-                  movie += '</tr>';
-                  $('#movie-table').append(movie);
-                });
-              },
-              error: function (jqXHR, textStatus, errorThrown) {
-                alert('Error: ' + textStatus + ' - ' + errorThrown);
-              },
-            });
-          </script>
-        </tbody>
+        <tbody id="movie-table-body" class="tbody"></tbody>
       </table>
+
+      <template id="source"> </template>
     </div>
+    <script src="../../dist/fleet.js"></script>
+
+    <script type="text/javascript">
+      const source = document.getElementById('source');
+      const target = document.getElementById('movie-table-body');
+
+      let view;
+
+      fetch('datasource/movies.json')
+        .then((content) => content.json())
+        .then((data) => {
+          data.forEach((elementData) => {
+            const tableRowElement = document.createElement('tr');
+
+            const tableCellElementForTitle = document.createElement('td');
+            tableCellElementForTitle.scope = 'row';
+            tableCellElementForTitle.dataset.label = 'Title';
+            tableCellElementForTitle.textContent = elementData['title'];
+            tableRowElement.appendChild(tableCellElementForTitle);
+
+            const tableCellElementForYear = document.createElement('td');
+            tableCellElementForYear.dataset.label = 'Year';
+            tableCellElementForYear.textContent = elementData['year'];
+            tableRowElement.appendChild(tableCellElementForYear);
+
+            const tableCellElementForCast = document.createElement('td');
+            tableCellElementForCast.dataset.label = 'Cast';
+            tableCellElementForCast.textContent = elementData['cast'];
+            tableRowElement.appendChild(tableCellElementForCast);
+
+            const tableCellElementForGenre = document.createElement('td');
+            tableCellElementForGenre.dataset.label = 'Genre';
+            tableCellElementForGenre.textContent = elementData['genre'];
+            tableRowElement.appendChild(tableCellElementForGenre);
+
+            source.content.appendChild(tableRowElement);
+          });
+        })
+        .then((data) => {
+          view = new fleet.BaseView(source, target);
+          view.setWindow(0, 100);
+        })
+        .catch((error) => console.error(error));
+    </script>
   </body>
 </html>
