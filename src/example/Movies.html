@@ -68,7 +68,10 @@
             source.content.appendChild(tableRowElement);
           });
         })
-        .then((data) => new fleet.BaseView(source, target, [new fleet.Partial(0, 20)]))
+        .then((data) => {
+          view = new fleet.BaseView(source, target);
+          view.setWindow(0, 100);
+        })
         .catch((error) => console.error(error));
     </script>
   </body>
